@@ -9,21 +9,16 @@ import time
 
 # class findHands():
 class handDetector():
-    # def __init__(self, mode=False, maxHands = 2, detectionCon=0.5, trackCon = 0.5):
-    # def __init__(self, mode=False, maxHands = 2, modelComplex=0.5, detectionCon=0.5, trackCon = 0.5):
-    def __init__(self, mode=False, maxHands=2, detectionCon=False, trackCon=0.5):
+    def __init__(self, mode=False, maxHands = 2, modelComplex=1, detectionCon=0.5, trackCon = 0.5):
         self.mode = mode
         self.maxHands = maxHands
-        # self.modelComplex = modelComplex
+        self.modelComplex = modelComplex
         self.detectionCon = detectionCon
         self.trackCon = trackCon
 
         self.mpHands = mp.solutions.hands
-        self.hands = self.mpHands.Hands(self.mode, self.maxHands, 
-                                        self.detectionCon, self.trackCon)
-        # self.hands = self.mpHands.Hands(self.mode, self.maxHands, self.modelComplex, self.detectionCon, self.trackCon)
+        self.hands = self.mpHands.Hands(self.mode, self.maxHands, self.modelComplex, self.detectionCon, self.trackCon)
         self.mpDraw = mp.solutions.drawing_utils
-
 
     def findHands(self, img, draw=True):
         # gray_image= cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
@@ -66,10 +61,9 @@ def main():
     cTime = 0  # current time
 
     detector = handDetector()
-    # detector = findHands()
 
-    # cap = cv2.VideoCapture(0)
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(0)
+    # cap = cv2.VideoCapture(1)  # for third party camera
 
     while True:
         success, img = cap.read()
@@ -83,12 +77,10 @@ def main():
                     (255, 0, 255), 3)
 
         cv2.imshow("Image", img)
-        cv2.waitKey(1)
+        if cv2.waitKey(1) == 13:
+            break
+    cv2.destroyAllWindows()
 
-
-
-# if __name__ == "__main__":
-#     main()
 
 if __name__ == "__main__":
     main()
