@@ -1,10 +1,13 @@
 # @author: Khom
 # from operator import mod
+# mediapipe is a framework used here developed by google
+# here we are going to use handTracking Module consisting of Palm Detection and Hand Landmarks
 import cv2
 import mediapipe as mp
 import time
 
 
+# class findHands():
 class handDetector():
     # def __init__(self, mode=False, maxHands = 2, detectionCon=0.5, trackCon = 0.5):
     # def __init__(self, mode=False, maxHands = 2, modelComplex=0.5, detectionCon=0.5, trackCon = 0.5):
@@ -22,16 +25,17 @@ class handDetector():
         self.mpDraw = mp.solutions.drawing_utils
 
 
-        def findHands(self, img, draw=True):
-            imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            results = self.hands.process(imgRGB)
-            # print(results.multi_hand_landmarks)  # check sth is detected or not
+    def findHands(self, img, draw=True):
+        # gray_image= cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
+        imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        results = self.hands.process(imgRGB)
+        # print(results.multi_hand_landmarks)  # check sth is detected or not
 
-            if results.multi_hand_landmarks:
-                for handLms in results.multi_hand_landmarks:
-                    if draw:
-                        self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS)
-            return img
+        if results.multi_hand_landmarks:
+            for handLms in results.multi_hand_landmarks:
+                if draw:
+                    self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS)
+        return img
 
                     # # get info now each id has a corresponding landmark and landmark has x, y and z
                     # for id, lm in enumerate(handLms.landmark):
@@ -61,9 +65,11 @@ def main():
     pTime = 0  # previous time
     cTime = 0  # current time
 
+    detector = handDetector()
+    # detector = findHands()
+
     # cap = cv2.VideoCapture(0)
     cap = cv2.VideoCapture(1)
-    detector = handDetector()
 
     while True:
         success, img = cap.read()
@@ -90,6 +96,8 @@ if __name__ == "__main__":
 
 
 
+
+# gray_image= cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
 
 # import cv2
@@ -139,7 +147,8 @@ if __name__ == "__main__":
 
 #         self.mpDraw = mp.solutions.drawing_utils
 
-#    def findFace(self, img, draw=True):
+
+#     def findFace(self, img, draw=True):
 
 #         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 #         self.results = self.face_mesh.process(imgRGB)

@@ -43,4 +43,6 @@ while True:
                     (255, 0, 255), 3)
 
     cv2.imshow("Image", img)
-    cv2.waitKey(1)
+    if cv2.waitKey(1) == 13:
+        break
+cv2.destroyAllWindows()
