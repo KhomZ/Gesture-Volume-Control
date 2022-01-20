@@ -31,7 +31,8 @@ while True:
 
     success, img = cap.read()
 
-    img[0:200, 0:200] = overlayList[0]  # slicing img[0:200,0:200] height and width
+    # img[0:200, 0:200] = overlayList[0]
+    img[0:228, 0:221] = overlayList[0]  # slicing img[0:200,0:200] height and width
 
     cv2.imshow("Finger Counter", img)
     # cv2.waitKey(1)
