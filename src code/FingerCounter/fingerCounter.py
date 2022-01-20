@@ -30,15 +30,57 @@ pTime = 0
 
 detector = htm.handDetector(detectionCon=0.75)
 
+tipIds = [4, 8, 12, 16, 20]  # 4-8-12-16-20 thumb, index, middle, ring and pinky fingers resp
+
 
 while True:
 
     success, img = cap.read()
     img = detector.findHands(img)
+    lmList = detector.findPosition(img, draw=False)
+    # print(lmList)
 
-    h, w, c = overlayList[0].shape
-    img[0:h, 0:w] = overlayList[0]
-    #
+    if len(lmList) != 0:
+        fingers = []
+
+        # Thumb
+        if lmList[tipIds[0]][1] < lmList[tipIds[0] - 1][1]:
+            fingers.append(1)
+        else:
+            fingers.append(0)
+
+        # 4 Fingers except thumb
+        for id in range(1, 5):
+            if lmList[tipIds[id]][2] < lmList[tipIds[id]-2][2]:
+                fingers.append(1)
+            else:
+                fingers.append(0)
+
+            # if lmList[8][2] < lmList[6][2]:
+            #     print("Index finger open")
+
+        # print(fingers)
+        totalFingers = fingers.count(1)
+        print(totalFingers)
+
+        h, w, c = overlayList[totalFingers].shape
+        img[0:h, 0:w] = overlayList[totalFingers]
+
+        # depends on where your finger images' are positioned in your directory
+        # eg. [0]=>img of finger 1,
+        # [1]=>img of finger 2,
+        # [2]=>img of finger 3,
+        # [3]=>img of finger 4,
+        # [4]=>img of finger 5,
+        # [5]=>img of finger 0 i.e. fist here
+        # h, w, c = overlayList[totalFingers-1].shape
+        # img[0:h, 0:w] = overlayList[totalFingers-1]
+
+    # h, w, c = overlayList[2].shape
+    # img[0:h, 0:w] = overlayList[2]
+    # h, w, c = overlayList[0].shape
+    # img[0:h, 0:w] = overlayList[0]
+
     # # img[0:200, 0:200] = overlayList[0]
     # img[0:228, 0:221] = overlayList[0]  # slicing img[0:200,0:200] height and width
     # # img[100:328, 100:321] = overlayList[0]
