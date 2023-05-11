@@ -4,3 +4,6 @@ Gesture Volume Control is a program application that is used to change the volum
 ### Sample Outputs
 ![Outputs](Gesture-Volume-Control/src code/HandTracking/images
 /Hand_LANDMARKS.jpg)
+
+![Outputs](Gesture-Volume-Control/src code/HandTracking/images
+/hand-landmarks.jpg)
